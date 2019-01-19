@@ -14,7 +14,7 @@ resource "aws_internet_gateway" "default" {
 }
 
 resource "aws_eip" "eip_gitlab" {
-  instance = "${aws_instance.gitlab-dip.id}"
+  instance = "${aws_instance.gitlab.id}"
   vpc      = true
 }
 
@@ -48,7 +48,7 @@ resource "aws_route_table" "web-public-rt" {
 }
 
 resource "aws_route_table_association" "web-public-rt" {
-  subnet_id = "${aws_subnet.public-dip-subnet.id}"
+  subnet_id = "${aws_subnet.public-subnet.id}"
   route_table_id = "${aws_route_table.web-public-rt.id}"
 }
 
@@ -134,8 +134,8 @@ data "template_cloudinit_config" "rancherserver-cloudinit" {
 resource "aws_instance" "gitlab" {
   ami = "ami-00562538339c5031c"
   instance_type   = "${var.server_instancetype}"
-  security_groups = [ "${aws_security_group.dipdefault.id}" ]
-  subnet_id       = "${aws_subnet.public-dip-subnet.id}"
+  security_groups = [ "${aws_security_group.default.id}" ]
+  subnet_id       = "${aws_subnet.public-subnet.id}"
   key_name        = "${var.ssh_key_name}"
 
   ebs_block_device {
@@ -233,7 +233,7 @@ resource "aws_instance" "rancheragent-etcd" {
   ami             = "${data.aws_ami.ubuntu.id}"
   instance_type   = "${var.etcd_instancetype}"
   key_name        = "${var.ssh_key_name}"
-  security_groups = [ "${aws_security_group.dipdefault.id}" ]
+  security_groups = [ "${aws_security_group.default.id}" ]
   subnet_id       = "${aws_subnet.public-subnet.id}"
   //iam_instance_profile = "${aws_iam_instance_profile.ec2-profile.name}"
   user_data       = "${data.template_cloudinit_config.rancheragent-etcd-cloudinit.*.rendered[count.index]}"

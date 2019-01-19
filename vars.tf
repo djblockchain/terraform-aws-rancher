@@ -92,3 +92,8 @@ variable "ssh_key_name" {
   default     = ""
   description = "Amazon AWS Key Pair Name"
 }
+
+variable "hosted_zone_id" {
+  default     = ""
+  description = "Amazon AWS Route53 Hosted Zone Id"
+}

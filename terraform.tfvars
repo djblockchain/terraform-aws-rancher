@@ -13,7 +13,7 @@ admin_password = "admin"
 # rancher/rancher image tag to use
 rancher_version = "latest"
 # Count of agent nodes with role all
-count_agent_all_nodes = "3"
+count_agent_all_nodes = "0"
 # Count of agent nodes with role etcd
 count_agent_etcd_nodes = "0"
 # Count of agent nodes with role controlplane
